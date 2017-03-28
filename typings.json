@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "open": "registry:dt/open#0.0.3+20160428043022",
+    "shelljs": "registry:dt/shelljs#0.7.6+20170215090504",
+    "tmp": "registry:dt/tmp#0.0.28+20161128184045"
+  }
+}
