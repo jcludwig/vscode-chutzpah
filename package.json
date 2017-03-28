@@ -11,7 +11,8 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.runChutzpah"
+    "onCommand:extension.runChutzpah",
+    "onCommand:extension.runChutzpahInBrowser"
   ],
   "main": "./out/src/extension",
   "contributes": {
@@ -19,12 +20,19 @@
       {
         "command": "extension.runChutzpah",
         "title": "Run Chutzpah"
+      },
+      {
+        "command": "extension.runChutzpahInBrowser",
+        "title": "Run Chutzpah in Browser"
       }
     ],
     "menus": {
       "explorer/context": [
         {
           "command": "extension.runChutzpah"
+        },
+        {
+          "command": "extension.runChutzpahInBrowser"
         }
       ]
     }
