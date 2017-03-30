@@ -8,13 +8,16 @@ import fs = require('fs');
 import * as shelljs from 'shelljs';
 
 function findChutzpahExecutable(startPath: string): string {
+    let config = vscode.workspace.getConfiguration("chutzpahRunner");
+    let runnerPath = config.get<string>("runnerPath");
+
     let parts = startPath.split(path.sep);
     let foundChutzpah = false;
     let chutzpahPath: string;
     while (parts.length > 0 && !foundChutzpah) {
         parts.splice(parts.length - 1, 1);
 
-        chutzpahPath = path.resolve(...parts.concat(['tools', 'chutzpah', '4.2.4', 'chutzpah.console.exe']));
+        chutzpahPath = path.resolve(...parts) + path.sep + runnerPath;
         if (fs.existsSync(chutzpahPath))
             foundChutzpah = true;
     }
@@ -60,13 +63,20 @@ function runChutzpah(options: RunChutzpahOptions): void {
 
         let process = shelljs.exec(command, { async: true, cwd: path.resolve(...searchPath) }, () => { });
         process.stdout.on('data', (data) => {
-            chutzpahOutputChannel.append(<string>data);
+            if (typeof data !== 'string')
+                return;
+
+            chutzpahOutputChannel.append(data);
         });
+        process.stderr.on('data', (data) => {
+            if (typeof data !== 'string')
+                return;
+            
+            chutzpahOutputChannel.append(data);
+        })
 
         process.on('exit', (code) => {
-            if (code === 0)
-                vscode.window.showInformationMessage('Chutzpah exited successfully');
-            else
+            if (code !== 0)
                 vscode.window.showWarningMessage('Chutzpah exited with code ' + code);
         });
     }

@@ -34,7 +34,26 @@
         {
           "command": "extension.runChutzpahInBrowser"
         }
+      ],
+      "editor/context": [
+        {
+          "command": "extension.runChutzpah"
+        },
+        {
+          "command": "extension.runChutzpahInBrowser"
+        }
       ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "Chutzpah runner configuration",
+      "properties": {
+        "chutzpahRunner.runnerPath": {
+          "type": "string",
+          "description": "Path to the Chutzpah console runner binary.",
+          "default": "tools/Chutzpah/4.2.4/chutzpah.console.exe"
+        }
+      }
     }
   },
   "scripts": {
